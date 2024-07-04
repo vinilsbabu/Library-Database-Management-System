@@ -1,0 +1,146 @@
+create database library;
+use library;
+create table branch (branch_no int primary key, manager_id int, branch_address varchar (200), contact_no varchar(15));
+create table employee (emp_id int primary key, emp_name varchar(50), position varchar(40), salary decimal(10, 2), branch_no int, foreign key (branch_no) 
+references branch(branch_no));
+create table books (isbn varchar(20) primary key, book_title varchar(200), category varchar(100), rental_price decimal(10,2), status enum('yes','no'), 
+author varchar(100), publisher varchar(100));
+create table customer (customer_id int primary key, customer_name varchar(50), customer_address varchar(200), reg_date date);
+create table issuestatus (issue_id int primary key, issued_cust int, issued_book_name varchar(200), issue_date date, isbn_book varchar(15),
+foreign key (issued_cust) references customer(customer_id), foreign key (isbn_book) references books(isbn));
+create table returnstatus (return_id int primary key, return_cust int, return_book_name varchar(200), return_date date, isbn_book2 varchar(15),
+foreign key (return_cust) references customer(customer_id), foreign key (isbn_book2) references books(isbn));
+insert into branch (branch_no, manager_id, branch_address, contact_no) values (1, 101, '123 MG Road, Bengaluru', '08012345678'), 
+(2, 102, '456 Park Street, Kolkata', '03312345678'), (3, 103, '789 Connaught Place, New Delhi', '01112345678'), (4, 104, '321 Anna Salai, Chennai', '04412345678'),
+(5, 105, '654 JM Road, Pune', '02012345678');
+insert into employee (emp_id, emp_name, position, salary, branch_no) values (1, 'Amit Sharma', 'Manager', 70000, 1), (2, 'Sonal Patel', 'Librarian', 50000, 1),
+(3, 'Rahul Verma', 'Assistant Librarian', 30000, 2), (4, 'Neha Gupta', 'Manager', 75000, 2), (5, 'Priya Reddy', 'Librarian', 48000, 3), (6, 'Rohan Singh', 'Assistant Librarian', 32000, 3),
+(7, 'Meera Joshi', 'Manager', 72000, 4), (8, 'Karan Mehta', 'Librarian', 51000, 4), (9, 'Anjali Rao', 'Assistant Librarian', 29000, 5), (10, 'Vikram Das', 'Manager', 68000, 5);
+insert into books (isbn, book_title, category, rental_price, status, author, publisher) values
+('1234567890123', 'The Great Indian Novel', 'Fiction', 70.00, 'yes', 'Shashi Tharoor', 'Penguin India'),
+('2345678901234', 'The Immortals of Meluha', 'Fantasy', 60.00, 'no', 'Amish Tripathi', 'Westland'),
+('3456789012345', 'The Argumentative Indian', 'Non-Fiction', 80.00, 'yes', 'Amartya Sen', 'Penguin'),
+('4567890123456', 'The White Tiger', 'Fiction', 55.00, 'yes', 'Aravind Adiga', 'HarperCollins'),
+('5678901234567', 'Chanakyas Chant', 'Historical Fiction', 65.00, 'no', 'Ashwin Sanghi', 'Westland'),
+('6789012345678', 'India After Gandhi', 'History', 90.00, 'yes', 'Ramachandra Guha', 'Picador'),
+('7890123456789', 'Five Point Someone', 'Fiction', 45.00, 'yes', 'Chetan Bhagat', 'Rupa & Co.'),
+('8901234567890', 'The Monk Who Sold His Ferrari', 'Self-help', 50.00, 'no', 'Robin Sharma', 'Jaico Publishing House'),
+('9012345678901', 'Wings of Fire', 'Autobiography', 70.00, 'yes', 'A.P.J. Abdul Kalam', 'Universities Press'),
+('0123456789012', '2 States', 'Fiction', 60.00, 'yes', 'Chetan Bhagat', 'Rupa & Co.'),
+('9780670086409', 'The Shiva Trilogy', 'Fantasy', 75.00, 'no', 'Amish Tripathi', 'Westland'),
+('8765432109876', 'My Experiments with Truth', 'Autobiography', 85.00, 'yes', 'Mahatma Gandhi', 'Penguin'),
+('7654321098765', 'Sapiens', 'Non-Fiction', 95.00, 'yes', 'Yuval Noah Harari', 'Penguin Random House'),
+('6543210987654', 'The Oath of the Vayuputras', 'Fantasy', 70.00, 'no', 'Amish Tripathi', 'Westland'),
+('5432109876543', 'I Too Had a Love Story', 'Romance', 40.00, 'yes', 'Ravinder Singh', 'Penguin'),
+('4321098765432', 'Half Girlfriend', 'Romance', 50.00, 'yes', 'Chetan Bhagat', 'Rupa & Co.'),
+('3210987654321', 'How to Win Friends and Influence People', 'Self-help', 55.00, 'yes', 'Dale Carnegie', 'Westland'),
+('2109876543210', 'The Power of Your Subconscious Mind', 'Self-help', 60.00, 'no', 'Joseph Murphy', 'Penguin'),
+('1098765432109', 'Rich Dad Poor Dad', 'Finance', 65.00, 'yes', 'Robert T. Kiyosaki', 'Plata Publishing'),
+('9876543210987', 'The Alchemist', 'Fiction', 70.00, 'yes', 'Paulo Coelho', 'HarperCollins'),
+('9780553296983', 'Foundation', 'Science Fiction', 75.00, 'yes', 'Isaac Asimov', 'Bantam Books'),
+('9780345538376', 'A Game of Thrones', 'Fantasy', 80.00, 'yes', 'George R.R. Martin', 'Bantam Books'),
+('9780385537858', 'The Da Vinci Code', 'Thriller', 85.00, 'no', 'Dan Brown', 'Doubleday'),
+('9780140177398', 'Of Mice and Men', 'Classic', 90.00, 'yes', 'John Steinbeck', 'Penguin'),
+('9780143039433', 'To Kill a Mockingbird', 'Classic', 95.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.'),
+('9780061120084', 'The Road', 'Post-Apocalyptic', 100.00, 'no', 'Cormac McCarthy', 'Knopf'),
+('9780743273565', 'The Great Gatsby', 'Classic', 105.00, 'yes', 'F. Scott Fitzgerald', 'Scribner'),
+('9780439139595', 'Harry Potter and the Goblet of Fire', 'Fantasy', 110.00, 'yes', 'J.K. Rowling', 'Scholastic'),
+('9781400079988', 'Life of Pi', 'Adventure', 115.00, 'no', 'Yann Martel', 'Mariner Books'),
+('9781400031705', 'Middlesex', 'Fiction', 120.00, 'yes', 'Jeffrey Eugenides', 'Picador'),
+('9780553386790', 'The Kite Runner', 'Drama', 125.00, 'yes', 'Khaled Hosseini', 'Riverhead Books'),
+('9780743487452', 'Angels and Demons', 'Thriller', 130.00, 'yes', 'Dan Brown', 'Pocket Books'),
+('9780451524935', '1984', 'Dystopian', 135.00, 'yes', 'George Orwell', 'Signet Classics'),
+('9780345803481', 'Fifty Shades of Grey', 'Romance', 140.00, 'no', 'E.L. James', 'Vintage Books'),
+('9780060850524', 'Brida', 'Fiction', 145.00, 'yes', 'Paulo Coelho', 'HarperCollins'),
+('9780062315007', 'The Goldfinch', 'Fiction', 150.00, 'yes', 'Donna Tartt', 'Little, Brown and Company'),
+('9781501139154', 'It', 'Horror', 155.00, 'yes', 'Stephen King', 'Scribner'),
+('9780553382563', 'A Thousand Splendid Suns', 'Drama', 160.00, 'yes', 'Khaled Hosseini', 'Riverhead Books'),
+('9780143127741', 'The Girl on the Train', 'Thriller', 165.00, 'yes', 'Paula Hawkins', 'Riverhead Books'),
+('9780316769488', 'The Catcher in the Rye', 'Classic', 170.00, 'yes', 'J.D. Salinger', 'Little, Brown and Company'),
+('9780812981605', 'The Nightingale', 'Historical Fiction', 175.00, 'yes', 'Kristin Hannah', 'St. Martins Press'),
+('9780141439600', 'Jane Eyre', 'Classic', 180.00, 'yes', 'Charlotte Brontë', 'Penguin'),
+('9781408855690', 'Harry Potter and the Philosophers Stone', 'Fantasy', 185.00, 'yes', 'J.K. Rowling', 'Bloomsbury'),
+('9780679734772', 'Beloved', 'Historical Fiction', 190.00, 'yes', 'Toni Morrison', 'Knopf'),
+('9780345804044', 'Fifty Shades Darker', 'Romance', 195.00, 'no', 'E.L. James', 'Vintage Books'),
+('9781501128035', 'The Stand', 'Horror', 200.00, 'yes', 'Stephen King', 'Doubleday'),
+('9780307474278', 'The Road', 'Post-Apocalyptic', 205.00, 'no', 'Cormac McCarthy', 'Knopf'),
+('9780385490818', 'The Lovely Bones', 'Fiction', 210.00, 'yes', 'Alice Sebold', 'Little, Brown and Company'),
+('9781400068652', 'All the Light We Cannot See', 'Historical Fiction', 215.00, 'yes', 'Anthony Doerr', 'Scribner'),
+('9781400033416', 'Middlesex', 'Fiction', 220.00, 'yes', 'Jeffrey Eugenides', 'Picador'),
+('9780316556347', 'The Silent Patient', 'Thriller', 225.00, 'yes', 'Alex Michaelides', 'Celadon Books'),
+('9780316489749', 'Before We Were Strangers', 'Romance', 230.00, 'yes', 'Renée Carlino', 'Atria Books'),
+('9780670020552', 'The Goldfinch', 'Fiction', 235.00, 'yes', 'Donna Tartt', 'Little, Brown and Company'),
+('9780671020200', 'The Underground Railroad', 'Historical Fiction', 240.00, 'yes', 'Colson Whitehead', 'Doubleday'),
+('9780399590504', 'The Immortalists', 'Fiction', 245.00, 'yes', 'Chloe Benjamin', 'G.P. Putnams Sons'),
+('9780735224315', 'Where the Crawdads Sing', 'Mystery', 250.00, 'yes', 'Delia Owens', 'G.P. Putnams Sons'),
+('9780812993547', 'The Night Circus', 'Fantasy', 255.00, 'yes', 'Erin Morgenstern', 'Doubleday'),
+('9780185754729', 'The Fault in Our Stars', 'Young Adult', 260.00, 'yes', 'John Green', 'Dutton Books'),
+('9780439023481', 'The Hunger Games', 'Dystopian', 265.00, 'yes', 'Suzanne Collins', 'Scholastic'),
+('9780735224312', 'Where the Crawdads Sing', 'Mystery', 270.00, 'yes', 'Delia Owens', 'G.P. Putnams Sons'),
+('9780316389739', 'Before We Were Strangers', 'Romance', 275.00, 'yes', 'Renée Carlino', 'Atria Books'),
+('9781400033426', 'Middlesex', 'Fiction', 280.00, 'yes', 'Jeffrey Eugenides', 'Picador'),
+('9780316256347', 'The Silent Patient', 'Thriller', 285.00, 'yes', 'Alex Michaelides', 'Celadon Books'),
+('9780671120552', 'The Goldfinch', 'Fiction', 290.00, 'yes', 'Donna Tartt', 'Little, Brown and Company'),
+('9780670020200', 'The Underground Railroad', 'Historical Fiction', 295.00, 'yes', 'Colson Whitehead', 'Doubleday'),
+('9780399591504', 'The Immortalists', 'Fiction', 300.00, 'yes', 'Chloe Benjamin', 'G.P. Putnams Sons'),
+('9780812193547', 'The Night Circus', 'Fantasy', 305.00, 'yes', 'Erin Morgenstern', 'Doubleday'),
+('9780235224315', 'Where the Crawdads Sing', 'Mystery', 310.00, 'yes', 'Delia Owens', 'G.P. Putnams Sons'),
+('9780316556387', 'The Silent Patient', 'Thriller', 315.00, 'yes', 'Alex Michaelides', 'Celadon Books'),
+('9780385390818', 'The Lovely Bones', 'Fiction', 320.00, 'yes', 'Alice Sebold', 'Little, Brown and Company'),
+('9781410033416', 'Middlesex', 'Fiction', 325.00, 'yes', 'Jeffrey Eugenides', 'Picador'),
+('9780316389729', 'Before We Were Strangers', 'Romance', 330.00, 'yes', 'Renée Carlino', 'Atria Books'),
+('9780385154729', 'The Fault in Our Stars', 'Young Adult', 335.00, 'yes', 'John Green', 'Dutton Books'),
+('9780735124315', 'Where the Crawdads Sing', 'Mystery', 340.00, 'yes', 'Delia Owens', 'G.P. Putnams Sons'),
+('9780316556317', 'The Silent Patient', 'Thriller', 345.00, 'yes', 'Alex Michaelides', 'Celadon Books'),
+('9780385190818', 'The Lovely Bones', 'Fiction', 350.00, 'yes', 'Alice Sebold', 'Little, Brown and Company'),
+('9781400043416', 'Middlesex', 'Fiction', 355.00, 'yes', 'Jeffrey Eugenides', 'Picador'),
+('9780385752729', 'The Fault in Our Stars', 'Young Adult', 360.00, 'yes', 'John Green', 'Dutton Books'),
+('9780714224315', 'Where the Crawdads Sing', 'Mystery', 365.00, 'yes', 'Delia Owens', 'G.P. Putnams Sons'),
+('9780316551347', 'The Silent Patient', 'Thriller', 370.00, 'yes', 'Alex Michaelides', 'Celadon Books'),
+('9780382490818', 'The Lovely Bones', 'Fiction', 375.00, 'yes', 'Alice Sebold', 'Little, Brown and Company'),
+('9781400083416', 'Middlesex', 'Fiction', 380.00, 'yes', 'Jeffrey Eugenides', 'Picador'),
+('9780316389719', 'Before We Were Strangers', 'Romance', 385.00, 'yes', 'Renée Carlino', 'Atria Books'),
+('9780385752229', 'The Fault in Our Stars', 'Young Adult', 390.00, 'yes', 'John Green', 'Dutton Books'),
+('9780735234315', 'Where the Crawdads Sing', 'Mystery', 395.00, 'yes', 'Delia Owens', 'G.P. Putnams Sons'),
+('9780316526347', 'The Silent Patient', 'Thriller', 400.00, 'yes', 'Alex Michaelides', 'Celadon Books');
+insert into customer (customer_id, customer_name, customer_address, reg_date) values (1, 'Ravi Kumar', '123 Lakshmi Nagar, Delhi', '2021-01-15'),
+(2, 'Suman Gupta', '456 Viman Nagar, Pune', '2021-02-20'), (3, 'Priya Singh', '789 Banjara Hills, Hyderabad', '2021-03-10'),
+(4, 'Amitabh Bachchan', '123 Juhu, Mumbai', '2021-04-25'), (5, 'Rajesh Khanna', '456 MG Road, Bengaluru', '2021-05-05'),
+(6, 'Kareena Kapoor', '789 Versova, Mumbai', '2021-06-15'), (7, 'Shah Rukh Khan', '123 Bandra, Mumbai', '2021-07-20'),
+(8, 'Alia Bhatt', '456 Khar, Mumbai', '2021-08-30'), (9, 'Ranveer Singh', '789 Andheri, Mumbai', '2021-09-10'),
+(10, 'Deepika Padukone', '123 Jayanagar, Bengaluru', '2021-10-15'), (11, 'Varun Dhawan', '456 Banjara Hills, Hyderabad', '2021-11-20'),
+(12, 'Anushka Sharma', '789 Jubilee Hills, Hyderabad', '2021-12-25'), (13, 'Aamir Khan', '123 Carter Road, Mumbai', '2022-01-10'),
+(14, 'Katrina Kaif', '456 Pali Hill, Mumbai', '2022-02-15'), (15, 'Hrithik Roshan', '789 Lokhandwala, Mumbai', '2022-03-20');
+insert into issuestatus (issue_id, issued_cust, issued_book_name, issue_date, isbn_book) values (1, 1, 'The Great Indian Novel', '2024-07-01', '1234567890123'),
+(2, 2, 'The Silent Patient', '2024-07-02', '9780316526347'), (3, 3, 'The Immortals of Meluha', '2024-07-03', '2345678901234'),
+(4, 4, 'Where the Crawdads Sing', '2024-07-04', '9780735234315'), (5, 5, 'The Argumentative Indian', '2024-07-05', '3456789012345'),
+(6, 6, 'The Fault in Our Stars', '2024-07-06', '9780385752229'), (7, 7, 'The White Tiger', '2024-07-07', '4567890123456'),
+(8, 8, 'Before We Were Strangers', '2024-07-08', '9780316389719');
+insert into returnstatus (return_Id, return_cust, return_book_name, return_date, isbn_book2) values (1, 1, 'The Great Indian Novel', '2024-07-10', '1234567890123'),
+(2, 2, 'The Silent Patient', '2024-07-11', '9780316526347'), (3, 3, 'The Immortals of Meluha', '2024-07-12', '2345678901234'),
+(4, 4, 'Where the Crawdads Sing', '2024-07-13', '9780735234315'), (5, 5, 'The Argumentative Indian', '2024-07-14', '3456789012345'), 
+(6, 6, 'The Fault in Our Stars', '2024-07-15', '9780385752229'), (7, 7, 'The White Tiger', '2024-07-16', '4567890123456'),
+(8, 8, 'Before We Were Strangers', '2024-07-17', '9780316389719');
+select * from books;
+select * from branch;
+select * from customer;
+select * from employee;
+select * from issuestatus;
+select * from returnstatus;
+select book_title, category, rental_price from books where status = 'yes';
+select emp_name, salary from employee order by salary desc;
+select books.book_title, customer.customer_name from issuestatus inner join books on issuestatus.isbn_book = books.isbn inner
+join customer on issuestatus.issued_cust = customer.customer_id;
+select category, COUNT(*) as total_books from books group by category;
+select emp_name, position from employee where salary > 50000;
+select customer.customer_name from customer left join issuestatus on customer.customer_id = issuestatus.issued_cust where customer.reg_date < '2022-01-01'
+  and issuestatus.issue_id is null;
+select branch_no, count(*) as total_employees from employee group by branch_no;
+select distinct customer.customer_name from customer join issuestatus on customer.customer_id = issuestatus.issued_cust where
+ issuestatus.issue_date between '2023-06-01' and '2023-06-30';
+select book_title from books where book_title like '%history%';
+select branch_no, count(*) as employee_count from employee group by branch_no having count(*) > 5;
+select employee.emp_name, branch.branch_address from employee inner join branch on employee.branch_no = branch.branch_no
+where employee.position = 'Manager';
+select distinct customer.customer_name from customer inner join issuestatus on customer.customer_id = issuestatus.issued_cust inner join books on 
+issuestatus.isbn_book = books.isbn where books.rental_price > 25;
